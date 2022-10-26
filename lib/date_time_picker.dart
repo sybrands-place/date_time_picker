@@ -168,7 +168,7 @@ class DateTimePicker extends FormField<String> {
     String? initialValue,
     FocusNode? focusNode,
     InputDecoration? decoration,
-    TextInputType? keyboardType,
+    this.keyboardType,
     TextCapitalization textCapitalization = TextCapitalization.none,
     TextInputAction? textInputAction,
     TextStyle? style,
@@ -373,6 +373,9 @@ class DateTimePicker extends FormField<String> {
 
   /// The earliest allowable [DateTime] that the user can select.
   final DateTime? firstDate;
+
+  /// Override default keyboard type for manual input.
+  final TextInputType? keyboardType;
 
   /// The latest allowable [DateTime] that the user can select.
   final DateTime? lastDate;
@@ -715,6 +718,7 @@ class _DateTimePickerState extends FormFieldState<String> {
       confirmText: widget.confirmText,
       initialDatePickerMode: widget.initialDatePickerMode ?? DatePickerMode.day,
       initialEntryMode: widget.initialEntryMode ?? DatePickerEntryMode.calendar,
+      keyboardType: widget.keyboardType,
       selectableDayPredicate: widget.selectableDayPredicate,
       fieldLabelText: widget.fieldLabelText,
       fieldHintText: widget.fieldHintText,
