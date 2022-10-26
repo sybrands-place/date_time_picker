@@ -289,54 +289,59 @@ class DateTimePicker extends FormField<String> {
                   Theme.of(field.context).inputDecorationTheme,
                 );
 
-              return TextField(
-                readOnly: true,
+              return GestureDetector(
                 onTap: readOnly ? null : lfOnTap,
-                controller: loCtrl,
-                decoration: loDecoration.copyWith(
-                  errorText: field.errorText,
+                child: IgnorePointer(
+                  child: TextField(
+                    readOnly: true,
+                    onTap: readOnly ? null : lfOnTap,
+                    controller: loCtrl,
+                    decoration: loDecoration.copyWith(
+                      errorText: field.errorText,
+                    ),
+                    focusNode: focusNode,
+                    keyboardType: keyboardType ?? TextInputType.datetime,
+                    textInputAction: textInputAction,
+                    style: style,
+                    strutStyle: strutStyle,
+                    textAlign: textAlign,
+                    textAlignVertical: textAlignVertical,
+                    //textDirection: textDirection,
+                    textCapitalization: textCapitalization,
+                    autofocus: autofocus,
+                    toolbarOptions: toolbarOptions,
+                    showCursor: showCursor,
+                    obscureText: obscureText,
+                    autocorrect: autocorrect,
+                    smartDashesType: smartDashesType ??
+                        (obscureText
+                            ? SmartDashesType.disabled
+                            : SmartDashesType.enabled),
+                    smartQuotesType: smartQuotesType ??
+                        (obscureText
+                            ? SmartQuotesType.disabled
+                            : SmartQuotesType.enabled),
+                    enableSuggestions: enableSuggestions,
+                    maxLengthEnforcement: maxLengthEnforcement,
+                    maxLines: maxLines,
+                    minLines: minLines,
+                    expands: expands,
+                    maxLength: maxLength,
+                    onChanged: onChangedHandler,
+                    onEditingComplete: onEditingComplete,
+                    onSubmitted: onFieldSubmitted,
+                    inputFormatters: inputFormatters,
+                    enabled: enabled,
+                    cursorWidth: cursorWidth,
+                    cursorRadius: cursorRadius,
+                    cursorColor: cursorColor,
+                    scrollPadding: scrollPadding,
+                    scrollPhysics: scrollPhysics,
+                    keyboardAppearance: keyboardAppearance,
+                    enableInteractiveSelection: enableInteractiveSelection,
+                    buildCounter: buildCounter,
+                  ),
                 ),
-                focusNode: focusNode,
-                keyboardType: keyboardType ?? TextInputType.datetime,
-                textInputAction: textInputAction,
-                style: style,
-                strutStyle: strutStyle,
-                textAlign: textAlign,
-                textAlignVertical: textAlignVertical,
-                //textDirection: textDirection,
-                textCapitalization: textCapitalization,
-                autofocus: autofocus,
-                toolbarOptions: toolbarOptions,
-                showCursor: showCursor,
-                obscureText: obscureText,
-                autocorrect: autocorrect,
-                smartDashesType: smartDashesType ??
-                    (obscureText
-                        ? SmartDashesType.disabled
-                        : SmartDashesType.enabled),
-                smartQuotesType: smartQuotesType ??
-                    (obscureText
-                        ? SmartQuotesType.disabled
-                        : SmartQuotesType.enabled),
-                enableSuggestions: enableSuggestions,
-                maxLengthEnforcement: maxLengthEnforcement,
-                maxLines: maxLines,
-                minLines: minLines,
-                expands: expands,
-                maxLength: maxLength,
-                onChanged: onChangedHandler,
-                onEditingComplete: onEditingComplete,
-                onSubmitted: onFieldSubmitted,
-                inputFormatters: inputFormatters,
-                enabled: enabled,
-                cursorWidth: cursorWidth,
-                cursorRadius: cursorRadius,
-                cursorColor: cursorColor,
-                scrollPadding: scrollPadding,
-                scrollPhysics: scrollPhysics,
-                keyboardAppearance: keyboardAppearance,
-                enableInteractiveSelection: enableInteractiveSelection,
-                buildCounter: buildCounter,
               );
             }
 
