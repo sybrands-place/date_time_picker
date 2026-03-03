@@ -133,7 +133,7 @@ class DateTimePicker extends FormField<String> {
   /// to [initialValue] or the empty string.
   ///
   /// For documentation about the various parameters, see the [TextField] class
-  /// and [new TextField], the constructor.
+  /// and [TextField], the constructor.
   DateTimePicker({
     Key? key,
     this.type = DateTimePickerType.date,
@@ -205,160 +205,161 @@ class DateTimePicker extends FormField<String> {
     bool enableInteractiveSelection = true,
     InputCounterWidgetBuilder? buildCounter,
     ScrollPhysics? scrollPhysics,
-  })  : assert(initialValue == null || controller == null),
-        assert(type == DateTimePickerType.time || firstDate != null),
-        assert(type == DateTimePickerType.time || lastDate != null),
-        assert(maxLines > 0),
-        assert(minLines == null || minLines > 0),
-        assert(
-          (minLines == null) || (maxLines >= minLines),
-          "minLines can't be greater than maxLines",
-        ),
-        assert(
-          !expands || (minLines == null),
-          'minLines and maxLines must be null when expands is true.',
-        ),
-        assert(
-          !obscureText || maxLines == 1,
-          'Obscured fields cannot be multiline.',
-        ),
-        assert(maxLength == null || maxLength > 0),
-        super(
-          key: key,
-          initialValue:
-              controller != null ? controller.text : (initialValue ?? ''),
-          onSaved: onSaved,
-          validator: validator,
-          autovalidateMode: autovalidate
-              ? AutovalidateMode.always
-              : AutovalidateMode.disabled,
-          enabled: enabled,
-          builder: (FormFieldState<String> field) {
-            final state = field as _DateTimePickerState;
+  }) : assert(initialValue == null || controller == null),
+       assert(type == DateTimePickerType.time || firstDate != null),
+       assert(type == DateTimePickerType.time || lastDate != null),
+       assert(maxLines > 0),
+       assert(minLines == null || minLines > 0),
+       assert(
+         (minLines == null) || (maxLines >= minLines),
+         "minLines can't be greater than maxLines",
+       ),
+       assert(
+         !expands || (minLines == null),
+         'minLines and maxLines must be null when expands is true.',
+       ),
+       assert(
+         !obscureText || maxLines == 1,
+         'Obscured fields cannot be multiline.',
+       ),
+       assert(maxLength == null || maxLength > 0),
+       super(
+         key: key,
+         initialValue: controller != null
+             ? controller.text
+             : (initialValue ?? ''),
+         onSaved: onSaved,
+         validator: validator,
+         autovalidateMode: autovalidate
+             ? AutovalidateMode.always
+             : AutovalidateMode.disabled,
+         enabled: enabled,
+         builder: (FormFieldState<String> field) {
+           final state = field as _DateTimePickerState;
 
-            void onChangedHandler(String value) {
-              if (onChanged != null) {
-                onChanged(value);
-              }
-              field.didChange(value);
-            }
+           void onChangedHandler(String value) {
+             if (onChanged != null) {
+               onChanged(value);
+             }
+             field.didChange(value);
+           }
 
-            Widget buildField(DateTimePickerType peType) {
-              GestureTapCallback lfOnTap;
-              TextEditingController loCtrl;
-              InputDecoration loDecoration;
+           Widget buildField(DateTimePickerType peType) {
+             GestureTapCallback lfOnTap;
+             TextEditingController loCtrl;
+             InputDecoration loDecoration;
 
-              switch (peType) {
-                case DateTimePickerType.time:
-                  lfOnTap = state._showTimePickerDialog;
-                  loCtrl = state._timeLabelController;
-                  loDecoration = InputDecoration(
-                    labelText: timeLabelText,
-                    icon: icon,
-                    hintText: timeHintText,
-                  );
+             switch (peType) {
+               case DateTimePickerType.time:
+                 lfOnTap = state._showTimePickerDialog;
+                 loCtrl = state._timeLabelController;
+                 loDecoration = InputDecoration(
+                   labelText: timeLabelText,
+                   icon: icon,
+                   hintText: timeHintText,
+                 );
 
-                  if (type == DateTimePickerType.dateTimeSeparate) {
-                    loDecoration = InputDecoration(
-                      labelText: timeLabelText,
-                      hintText: timeHintText,
-                    );
-                  }
-                  break;
-                case DateTimePickerType.dateTime:
-                  lfOnTap = state._showDateTimePickerDialog;
-                  loCtrl = state._dateLabelController;
-                  loDecoration = InputDecoration(
-                    labelText: dateLabelText,
-                    icon: icon,
-                    hintText: dateHintText,
-                  );
-                  break;
-                default:
-                  lfOnTap = state._showDatePickerDialog;
-                  loCtrl = state._dateLabelController;
-                  loDecoration = InputDecoration(
-                    labelText: dateLabelText,
-                    icon: icon,
-                    hintText: dateHintText,
-                  );
-              }
+                 if (type == DateTimePickerType.dateTimeSeparate) {
+                   loDecoration = InputDecoration(
+                     labelText: timeLabelText,
+                     hintText: timeHintText,
+                   );
+                 }
+                 break;
+               case DateTimePickerType.dateTime:
+                 lfOnTap = state._showDateTimePickerDialog;
+                 loCtrl = state._dateLabelController;
+                 loDecoration = InputDecoration(
+                   labelText: dateLabelText,
+                   icon: icon,
+                   hintText: dateHintText,
+                 );
+                 break;
+               default:
+                 lfOnTap = state._showDatePickerDialog;
+                 loCtrl = state._dateLabelController;
+                 loDecoration = InputDecoration(
+                   labelText: dateLabelText,
+                   icon: icon,
+                   hintText: dateHintText,
+                 );
+             }
 
-              loDecoration = decoration ?? loDecoration
-                ..applyDefaults(
-                  Theme.of(field.context).inputDecorationTheme,
-                );
+             loDecoration = decoration ?? loDecoration
+               ..applyDefaults(Theme.of(field.context).inputDecorationTheme);
 
-              return TextField(
-                readOnly: true,
-                onTap: readOnly ? null : lfOnTap,
-                controller: loCtrl,
-                decoration: loDecoration.copyWith(
-                  errorText: field.errorText,
-                ),
-                focusNode: focusNode,
-                keyboardType: keyboardType ?? TextInputType.datetime,
-                textInputAction: textInputAction,
-                style: style,
-                strutStyle: strutStyle,
-                textAlign: textAlign,
-                textAlignVertical: textAlignVertical,
-                //textDirection: textDirection,
-                textCapitalization: textCapitalization,
-                autofocus: autofocus,
-                contextMenuBuilder: contextMenuBuilder,
-                showCursor: showCursor,
-                obscureText: obscureText,
-                autocorrect: autocorrect,
-                smartDashesType: smartDashesType ??
-                    (obscureText
-                        ? SmartDashesType.disabled
-                        : SmartDashesType.enabled),
-                smartQuotesType: smartQuotesType ??
-                    (obscureText
-                        ? SmartQuotesType.disabled
-                        : SmartQuotesType.enabled),
-                enableSuggestions: enableSuggestions,
-                maxLengthEnforcement: maxLengthEnforcement,
-                maxLines: maxLines,
-                minLines: minLines,
-                expands: expands,
-                maxLength: maxLength,
-                onChanged: onChangedHandler,
-                onEditingComplete: onEditingComplete,
-                onSubmitted: onFieldSubmitted,
-                inputFormatters: inputFormatters,
-                enabled: enabled,
-                cursorWidth: cursorWidth,
-                cursorRadius: cursorRadius,
-                cursorColor: cursorColor,
-                scrollPadding: scrollPadding,
-                scrollPhysics: scrollPhysics,
-                keyboardAppearance: keyboardAppearance,
-                enableInteractiveSelection: enableInteractiveSelection,
-                buildCounter: buildCounter,
-              );
-            }
+             return TextField(
+               readOnly: true,
+               onTap: readOnly ? null : lfOnTap,
+               controller: loCtrl,
+               decoration: loDecoration.copyWith(errorText: field.errorText),
+               focusNode: focusNode,
+               keyboardType: keyboardType ?? TextInputType.datetime,
+               textInputAction: textInputAction,
+               style: style,
+               strutStyle: strutStyle,
+               textAlign: textAlign,
+               textAlignVertical: textAlignVertical,
+               //textDirection: textDirection,
+               textCapitalization: textCapitalization,
+               autofocus: autofocus,
+               contextMenuBuilder: contextMenuBuilder,
+               showCursor: showCursor,
+               obscureText: obscureText,
+               autocorrect: autocorrect,
+               smartDashesType:
+                   smartDashesType ??
+                   (obscureText
+                       ? SmartDashesType.disabled
+                       : SmartDashesType.enabled),
+               smartQuotesType:
+                   smartQuotesType ??
+                   (obscureText
+                       ? SmartQuotesType.disabled
+                       : SmartQuotesType.enabled),
+               enableSuggestions: enableSuggestions,
+               maxLengthEnforcement: maxLengthEnforcement,
+               maxLines: maxLines,
+               minLines: minLines,
+               expands: expands,
+               maxLength: maxLength,
+               onChanged: onChangedHandler,
+               onEditingComplete: onEditingComplete,
+               onSubmitted: onFieldSubmitted,
+               inputFormatters: inputFormatters,
+               enabled: enabled,
+               cursorWidth: cursorWidth,
+               cursorRadius: cursorRadius,
+               cursorColor: cursorColor,
+               scrollPadding: scrollPadding,
+               scrollPhysics: scrollPhysics,
+               keyboardAppearance: keyboardAppearance,
+               enableInteractiveSelection: enableInteractiveSelection,
+               buildCounter: buildCounter,
+             );
+           }
 
-            switch (type) {
-              case DateTimePickerType.time:
-                return buildField(DateTimePickerType.time);
-              case DateTimePickerType.dateTime:
-                return buildField(DateTimePickerType.dateTime);
-              case DateTimePickerType.dateTimeSeparate:
-                return Row(children: <Widget>[
-                  Expanded(child: buildField(DateTimePickerType.date)),
-                  const SizedBox(width: 15),
-                  SizedBox(
-                    width: timeFieldWidth ?? 100,
-                    child: buildField(DateTimePickerType.time),
-                  )
-                ]);
-              default:
-                return buildField(DateTimePickerType.date);
-            }
-          },
-        );
+           switch (type) {
+             case DateTimePickerType.time:
+               return buildField(DateTimePickerType.time);
+             case DateTimePickerType.dateTime:
+               return buildField(DateTimePickerType.dateTime);
+             case DateTimePickerType.dateTimeSeparate:
+               return Row(
+                 children: <Widget>[
+                   Expanded(child: buildField(DateTimePickerType.date)),
+                   const SizedBox(width: 15),
+                   SizedBox(
+                     width: timeFieldWidth ?? 100,
+                     child: buildField(DateTimePickerType.time),
+                   ),
+                 ],
+               );
+             default:
+               return buildField(DateTimePickerType.date);
+           }
+         },
+       );
 
   /// The DateTimePicker type:
   /// [date], [time], [dateTime] or [dateTimeSeparate].
@@ -568,8 +569,10 @@ class _DateTimePickerState extends FormFieldState<String> {
         _dateLabelController.text = _sDate;
 
         if (widget.dateMask != null && widget.dateMask != '') {
-          _dateLabelController.text =
-              DateFormat(widget.dateMask, languageCode).format(_dDate);
+          _dateLabelController.text = DateFormat(
+            widget.dateMask,
+            languageCode,
+          ).format(_dDate);
         } else {
           String lsMask = 'MMM d, yyyy';
 
@@ -581,13 +584,17 @@ class _DateTimePickerState extends FormFieldState<String> {
             }
           }
 
-          _dateLabelController.text =
-              DateFormat(lsMask, languageCode).format(_dDate);
+          _dateLabelController.text = DateFormat(
+            lsMask,
+            languageCode,
+          ).format(_dDate);
         }
       } else {
         final llTime = lsValue.split(':');
-        _tTime =
-            TimeOfDay(hour: int.parse(llTime[0]), minute: int.parse(llTime[1]));
+        _tTime = TimeOfDay(
+          hour: int.parse(llTime[0]),
+          minute: int.parse(llTime[1]),
+        );
         _sTime = lsValue;
 
         if (!widget.use24HourFormat) {
@@ -609,8 +616,9 @@ class _DateTimePickerState extends FormFieldState<String> {
       widget.controller?.addListener(_handleControllerChanged);
 
       if (oldWidget.controller != null && widget.controller == null) {
-        _stateController =
-            TextEditingController.fromValue(oldWidget.controller?.value);
+        _stateController = TextEditingController.fromValue(
+          oldWidget.controller?.value,
+        );
       }
 
       if (widget.controller != null) {
@@ -647,8 +655,10 @@ class _DateTimePickerState extends FormFieldState<String> {
           _timeLabelController.text = lsOldTime != '' ? _sTime : '';
 
           if (widget.dateMask != null && widget.dateMask != '') {
-            _dateLabelController.text =
-                DateFormat(widget.dateMask, languageCode).format(_dDate);
+            _dateLabelController.text = DateFormat(
+              widget.dateMask,
+              languageCode,
+            ).format(_dDate);
           } else {
             String lsMask = 'MMM d, yyyy';
 
@@ -660,13 +670,17 @@ class _DateTimePickerState extends FormFieldState<String> {
               }
             }
 
-            _dateLabelController.text =
-                DateFormat(lsMask, languageCode).format(_dDate);
+            _dateLabelController.text = DateFormat(
+              lsMask,
+              languageCode,
+            ).format(_dDate);
           }
         } else {
           final llTime = lsValue.split(':');
           _tTime = TimeOfDay(
-              hour: int.parse(llTime[0]), minute: int.parse(llTime[1]));
+            hour: int.parse(llTime[0]),
+            minute: int.parse(llTime[1]),
+          );
           _sTime = lsValue;
           _timeLabelController.text = _sTime + _sPeriod;
         }
@@ -739,11 +753,15 @@ class _DateTimePickerState extends FormFieldState<String> {
       String lsFormatedDate;
 
       if (widget.dateMask != null && widget.dateMask != '') {
-        lsFormatedDate = DateFormat(widget.dateMask, languageCode)
-            .format(DateTime.tryParse(_sDate)!);
+        lsFormatedDate = DateFormat(
+          widget.dateMask,
+          languageCode,
+        ).format(DateTime.tryParse(_sDate)!);
       } else {
-        lsFormatedDate = DateFormat('MMM dd, yyyy', languageCode)
-            .format(DateTime.tryParse(_sDate)!);
+        lsFormatedDate = DateFormat(
+          'MMM dd, yyyy',
+          languageCode,
+        ).format(DateTime.tryParse(_sDate)!);
       }
 
       if (widget.type == DateTimePickerType.dateTimeSeparate && _sTime != '') {
@@ -762,8 +780,13 @@ class _DateTimePickerState extends FormFieldState<String> {
 
   void set12HourTimeValues(final TimeOfDay ptTimePicked) {
     final ldNow = DateTime.now();
-    final ldTime = DateTime(ldNow.year, ldNow.month, ldNow.day,
-        ptTimePicked.hour, ptTimePicked.minute);
+    final ldTime = DateTime(
+      ldNow.year,
+      ldNow.month,
+      ldNow.day,
+      ptTimePicked.hour,
+      ptTimePicked.minute,
+    );
     final lsHour = DateFormat("hh", widget.locale.toString()).format(ldTime);
     final lsMinute = DateFormat("mm", widget.locale.toString()).format(ldTime);
 
@@ -782,8 +805,9 @@ class _DateTimePickerState extends FormFieldState<String> {
       routeSettings: widget.routeSettings,
       builder: (BuildContext context, Widget? child) {
         return MediaQuery(
-          data: MediaQuery.of(context)
-              .copyWith(alwaysUse24HourFormat: widget.use24HourFormat),
+          data: MediaQuery.of(
+            context,
+          ).copyWith(alwaysUse24HourFormat: widget.use24HourFormat),
           child: child ?? const SizedBox(),
         );
       },
@@ -861,8 +885,9 @@ class _DateTimePickerState extends FormFieldState<String> {
         routeSettings: widget.routeSettings,
         builder: (BuildContext context, Widget? child) {
           return MediaQuery(
-            data: MediaQuery.of(context)
-                .copyWith(alwaysUse24HourFormat: widget.use24HourFormat),
+            data: MediaQuery.of(
+              context,
+            ).copyWith(alwaysUse24HourFormat: widget.use24HourFormat),
             child: child ?? const SizedBox(),
           );
         },
@@ -903,12 +928,16 @@ class _DateTimePickerState extends FormFieldState<String> {
       _sValue = _sValue.trim();
 
       if (widget.dateMask != null && widget.dateMask != '') {
-        lsFormatedDate = DateFormat(widget.dateMask, languageCode)
-            .format(DateTime.tryParse(_sValue)!);
+        lsFormatedDate = DateFormat(
+          widget.dateMask,
+          languageCode,
+        ).format(DateTime.tryParse(_sValue)!);
       } else {
         final lsMask = _sTime != '' ? 'MMM dd, yyyy - HH:mm' : 'MMM dd, yyyy';
-        lsFormatedDate = DateFormat(lsMask, languageCode)
-            .format(DateTime.tryParse(_sValue)!);
+        lsFormatedDate = DateFormat(
+          lsMask,
+          languageCode,
+        ).format(DateTime.tryParse(_sValue)!);
       }
 
       _dateLabelController.text = lsFormatedDate;
