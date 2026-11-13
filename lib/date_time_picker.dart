@@ -4,7 +4,7 @@
 
 library date_time_picker;
 
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
 
@@ -778,7 +778,7 @@ class _DateTimePickerState extends FormFieldState<String> {
     }
   }
 
-  void set12HourTimeValues(final TimeOfDay ptTimePicked) {
+  void set12HourTimeValues(TimeOfDay ptTimePicked) {
     final ldNow = DateTime.now();
     final ldTime = DateTime(
       ldNow.year,

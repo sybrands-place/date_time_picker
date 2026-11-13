@@ -1,3 +1,8 @@
+## 4.0.0 - 2026-11-13
+
+* **Breaking:** Migrated from the deprecated `package:flutter/material.dart` to `package:material_ui`. The `decoration` parameter is now `material_ui`'s `InputDecoration`, so callers must import `package:material_ui/material_ui.dart`.
+* Added `material_ui` dependency; raised constraints to Dart >=3.13.0 and Flutter >=3.47.0.
+
 ## 2.1.0 - 2021-07-08
 
 * Fixed 12h display format.
